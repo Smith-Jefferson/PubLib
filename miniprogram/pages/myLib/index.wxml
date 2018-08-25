@@ -1,0 +1,55 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userheader">
+    <view class="user-image">
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </view>
+    <text class="user-name">{{userInfo.nickName}}</text>
+  </view>
+
+
+  <!-- 联系方式 -->
+  <view class="contact">
+    <view class="contact-title">
+      <text>联系方式</text>
+    </view>
+
+
+    <view class="contact-list">
+      <view class="contact-item">
+        <text class="contact-item-label">Skype:</text>
+        <input bindblur="saveContact" type="text" adjust-position="true" class="contact-item-value" value="sicheng"/>
+      </view>
+    </view>
+  </view>
+
+<!-- 联系方式 -->
+  <view class="mybook">
+    <view class="mybook-title">
+      <text>我的书单</text>
+      <button size="mini" style="default" class="mybook-add"  bindtap="addBook">添加书单</button>
+    </view>
+    <view class="item">
+      <view class="item-image">
+        <image class="item-book-image" src="{{imgUrl}}"></image>
+      </view>
+      <view class="item-info">
+        <view class="item-title">
+          <text>我是书名</text>
+        </view>
+        <view class="item-author">
+          <text>我是作者</text>
+        </view>
+      </view>
+      <view class="item-user">
+        <view class="item-text">
+          <text>at</text>
+        </view>
+        <view class="item-date">
+          <text>2018-08-20</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

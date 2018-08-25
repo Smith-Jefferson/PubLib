@@ -1,0 +1,130 @@
+/**index.wxss**/
+
+page {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.searchbox {
+  height: auto;
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  box-sizing: border-box;
+  padding: 0 40rpx 0 40rpx;
+  width: 100%;
+}
+
+.searchbox input {
+  flex: 1;
+  color: #ccc;
+  border-bottom: #ccc 1px solid;
+  padding-left: 0.5em;
+  margin-right: 0.5em;
+  font-size: 34rpx;
+}
+
+.searchbox button {
+  display: inline-block;
+  width: 5em;
+  text-align: center;
+  padding: 0 0 0 5rpx;
+  border-radius: 5rpx;
+  background: rgb(66, 165, 245);
+  color: #fff;
+  align-self: flex-end;
+}
+
+.item {
+  margin-top: 60rpx;
+  height: 120rpx;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  transition: all 300ms ease;
+  padding: 0 40rpx 0 40rpx;
+  flex-direction: row;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.item-container {
+  width: 100%;
+  height: 400rpx;
+  padding: 20rpx 20rpx 20rpx 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.item-image image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.item-image {
+  margin-right: 10rpx;
+}
+
+.item-info {
+  width: 100%;
+  line-height: 52px;
+  font-size: 34rpx;
+  color: #007aff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title, .item-author {
+  line-height: 40rpx;
+  font-size: 32rpx;
+}
+
+.item-title {
+  font-weight: bold;
+  color: #000;
+}
+
+.item-author {
+  color: #666;
+}
+
+.item-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item-user .item-text {
+  margin-right: 5rpx;
+  color: #999;
+}
+
+.item-user-image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  height: 100rpx;
+}
+.footer-item{
+  flex:1;
+  text-align: center;
+  color:rgb(66, 165, 245);
+}

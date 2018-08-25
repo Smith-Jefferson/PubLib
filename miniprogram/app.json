@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/myLib/index",
+    "pages/theLib/index",
+    "pages/userConsole/userConsole",
+    "pages/bookList/index",
+    "pages/login/index"
+  ],
+  "window": {
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Public Library",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar":{
+    "list":[{
+      "pagePath":"pages/index/index",
+      "text":"书单"
+    },{
+      "pagePath": "pages/myLib/index",
+      "text": "我的"
+    },{
+      "pagePath": "pages/bookList/index",
+      "text": "入库"
+    }],
+    "color":"#333",
+    "background-color":"#ccc"
+  },
+  "debug":true
+}

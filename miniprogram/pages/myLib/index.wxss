@@ -1,0 +1,160 @@
+/**index.wxss**/
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.user-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 40rpx 0 20rpx 0;
+}
+
+.user-image image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50px;
+}
+
+.user-name {
+  width: 100%;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.contact, .mybook {
+  margin-top: 40rpx;
+  height: auto;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  transition: all 300ms ease;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.mybook-title {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.mybook-title text{
+  flex:1;
+}
+
+.mybook-add {
+  align-self: flex-end;
+  display: inline-block;
+  width: 205rpx;
+  border-radius: 5rpx;
+  padding: 0;
+  background: rgb(66, 165, 245);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.contact-title {
+  font-size: 34rpx;
+  line-height: 50rpx;
+  font-weight: bold;
+}
+
+.contact-list {
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: row;
+  line-height: 40rpx;
+  align-items: center;
+}
+
+.contact-item-label {
+  font-size: 32rpx;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.contact-item-value {
+  font-size: 36rpx;
+  color: #000;
+}
+
+.item {
+  margin-top: 40rpx;
+  height: 120rpx;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  transition: all 300ms ease;
+  flex-direction: row;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.item-image image {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.item-image {
+  margin-right: 10rpx;
+}
+
+.item-info {
+  width: 100%;
+  line-height: 52px;
+  font-size: 34rpx;
+  color: #007aff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title, .item-author {
+  line-height: 40rpx;
+  font-size: 32rpx;
+}
+
+.item-title {
+  font-weight: bold;
+  color: #000;
+}
+
+.item-author {
+  color: #666;
+}
+
+.item-user {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+  margin-bottom: 10rpx;
+}
+
+.item-user .item-text {
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.item-date {
+  align-self: flex-end;
+  font-size: 30rpx;
+  color: #666;
+}
+
+.mybook .item:last-child {
+  border: none;
+}

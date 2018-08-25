@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 用户 openid -->
+  <view class="searchbox">
+    <input placeholder="书非借不能读" auto-focus/>
+    <button type="default" size="mini">有没有？</button>
+  </view>
+
+
+  <view class="item" bindtap="getMoreInfo">
+    <view class="item-image">
+      <image class="item-book-image" src="{{imgUrl}}"></image>
+    </view>
+    <view class="item-info">
+      <view class="item-title">
+        <text>我是书名</text>
+      </view>
+      <view class="item-author">
+        <text>我是作者</text>
+      </view>
+    </view>
+    <view class="item-user">
+      <view class="item-text">
+        <text>From</text>
+      </view>
+      <image class="item-user-image" src="{{imgUrl}}">
+      </image>
+    </view>
+  </view>
+
+
+</view>
