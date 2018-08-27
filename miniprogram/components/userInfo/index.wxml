@@ -1,0 +1,23 @@
+ <view class="userheader">
+    <view class="user-image">
+      <image src="{{userInfo.avatarUrl}}"></image>
+    </view>
+    <text class="user-name">{{userInfo.nickName}}</text>
+  </view>
+
+
+  <!-- 联系方式 -->
+  <view class="contact">
+    <view class="contact-title">
+      <text>联系方式</text>
+    </view>
+
+
+    <view class="contact-list">
+      <view class="contact-item">
+        <text class="contact-item-label">Skype:</text>
+        <text wx:if="{{!isMe}}" class="contact-item-value">{{contact.skypeId}}</text>
+        <input wx:if="{{isMe}}" bindblur="editSkypeId" type="text" adjust-position="true" class="contact-item-value" value="{{contact.skypeId}}"/>
+      </view>
+    </view>
+  </view>

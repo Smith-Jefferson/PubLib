@@ -5,4 +5,16 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100%;
+}
+
+.container{
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+  padding:40% 20%;
+}
+.getUserAuth{
+  margin-top:40rpx;
 }

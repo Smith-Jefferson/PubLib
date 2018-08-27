@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/myLib/index",
     "pages/theLib/index",
-    "pages/userConsole/userConsole",
     "pages/bookList/index",
     "pages/login/index"
   ],
@@ -21,9 +20,6 @@
     },{
       "pagePath": "pages/myLib/index",
       "text": "我的"
-    },{
-      "pagePath": "pages/bookList/index",
-      "text": "入库"
     }],
     "color":"#333",
     "background-color":"#ccc"

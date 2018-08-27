@@ -1,7 +1,7 @@
 <!-- index.wxml -->
 <view class="container">
   <view class="tips">需要你的授权哦</view>
-  <button type="primary" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})">
+  <button type="primary" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="getUserAuth">
     点击获取授权
   </button>
 </view>

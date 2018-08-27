@@ -20,7 +20,7 @@ page {
 
 .searchbox input {
   flex: 1;
-  color: #ccc;
+  color: #000;
   border-bottom: #ccc 1px solid;
   padding-left: 0.5em;
   margin-right: 0.5em;
@@ -66,7 +66,7 @@ page {
 }
 
 .item-image image {
-  width: 100rpx;
+  width: 80rpx;
   height: 100rpx;
 }
 
@@ -86,16 +86,21 @@ page {
 
 .item-title, .item-author {
   line-height: 40rpx;
-  font-size: 32rpx;
+  white-space: nowrap;
+  width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-title {
   font-weight: bold;
   color: #000;
+  font-size: 24rpx;
 }
 
 .item-author {
   color: #666;
+  font-size: 20rpx;
 }
 
 .item-user {
@@ -112,6 +117,8 @@ page {
 .item-user-image {
   width: 100rpx;
   height: 100rpx;
+  border-radius: 50rpx;
+  margin: 5rpx;
 }
 
 .footer {
@@ -120,11 +127,12 @@ page {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items:center;
+  align-items: center;
   height: 100rpx;
 }
-.footer-item{
-  flex:1;
+
+.footer-item {
+  flex: 1;
   text-align: center;
-  color:rgb(66, 165, 245);
+  color: rgb(66, 165, 245);
 }

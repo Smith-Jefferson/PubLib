@@ -1,0 +1,28 @@
+<!-- miniprogram/components/bookList/index.wxml -->
+<view class="mybook">
+    <view class="mybook-title">
+        <text>我的书单</text>
+        <button wx-if="{{isMe}}" size="mini" style="default" class="mybook-add" bindtap="addBook" >添加书单</button>
+    </view>
+    <view class="item" wx:for="{{bookList}}" wx:key="unique">
+        <view class="item-image">
+            <image class="item-book-image" src="{{item.image}}"></image>
+        </view>
+        <view class="item-info">
+            <view class="item-title">
+                <text>{{item.title}}</text>
+            </view>
+            <view class="item-author">
+                <text>{{item.author}}</text>
+            </view>
+        </view>
+        <view class="item-user">
+            <view class="item-text">
+                <text>于</text>
+            </view>
+            <view class="item-date">
+                <text>{{item.createAt}}</text>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,32 +1,29 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
-  <!-- 用户 openid -->
+  <!-- 用户 openId -->
   <view class="searchbox">
-    <input placeholder="书非借不能读" auto-focus/>
-    <button type="default" size="mini">有没有？</button>
+    <input placeholder="书非借不能读" bindinput="bindKeyInput" class="searchbox-keyword"/>
+    <button bindtap="searchBooks" type="default" size="mini">有没有？</button>
   </view>
-
-
-  <view class="item" bindtap="getMoreInfo">
-    <view class="item-image">
-      <image class="item-book-image" src="{{imgUrl}}"></image>
-    </view>
-    <view class="item-info">
-      <view class="item-title">
-        <text>我是书名</text>
+  <scroll-view scroll-y="{{!end}}" enable-back-to-top="true" bindscrolltolower="toLower">
+    <view wx:for="{{bookList}}" data-uid="{{item.openId}}" wx:key="index" class="item" bindtap="getMoreInfo">
+      <view class="item-image">
+        <image class="item-book-image" src="{{item.image}}"></image>
       </view>
-      <view class="item-author">
-        <text>我是作者</text>
+      <view class="item-info">
+        <view class="item-title">
+          <text>{{item.title}}</text>
+        </view>
+        <view class="item-author">
+          <text>{{item.author}}</text>
+        </view>
+      </view>
+      <view class="item-user">
+        <view class="item-text">
+          <text>From</text>
+        </view>
+        <image class="item-user-image" src="{{item.userInfo.avatarUrl}}"></image>
       </view>
     </view>
-    <view class="item-user">
-      <view class="item-text">
-        <text>From</text>
-      </view>
-      <image class="item-user-image" src="{{imgUrl}}">
-      </image>
-    </view>
-  </view>
-
-
+  </scroll-view>
 </view>

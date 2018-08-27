@@ -1,1 +1,6 @@
-{}
+{
+    "usingComponents": {
+      "myBooks": "../../components/bookList/index",
+      "userInfo":"../../components/userInfo/index"
+    }
+  }
