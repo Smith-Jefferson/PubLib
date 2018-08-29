@@ -27,7 +27,9 @@ Component({
       const db = wx.cloud.database();
       db.collection('books').where({
         _openid: this.data.openId
-      }).get({
+      }).orderBy(
+        'createAt', 'desc'
+      ).get({
         success: res => {
           if (!res.data || res.data.length == 0) {
             return;
@@ -54,6 +56,29 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    //判断是否已存在
+    checkWhetherbookExsist: function (scanId) {
+      return new Promise((resolve, reject) => {
+        const db = wx.cloud.database();
+        db.collection('books').where({
+          scanId: scanId,
+          _openid: this.data.openId
+        }).count().then(findRes => {
+          if (!findRes) {
+            reject('count DB error');
+            return;
+          }
+          if (findRes.total && findRes.total > 0) {
+            reject('already exsist');
+            return;
+          }
+          resolve(findRes.total)
+        }).catch(err => {
+          reject(err);
+        })
+      })
+    },
+    //查询豆瓣接口
     queryBookByISBN: function (isbnId) {
       console.log('isbnid', isbnId)
       return new Promise(function (resolve, reject) {
@@ -63,91 +88,75 @@ Component({
           header: {
             "Content-Type": "json"
           },
-          success: info => {
-            console.log('info', info)
-            resolve(info);
-            // let bookInfo = info.data;
-            // this.addBookToDB(bookInfo);
-            // //将书加到显示列表中
-            // let theDate = new Date();
-            // let theDateArr = [theDate.getFullYear(), theDate.getMonth() + 1, theDate.getDate()];
-            // this.data.bookList.push({
-            //   image: bookInfo.image,
-            //   title: bookInfo.title,
-            //   author: bookInfo.author && bookInfo.author.join(','),
-            //   createAt: theDateArr.join('-')
-            // })
-            // this.setData({
-            //   bookList: this.data.bookList
-            // })
+          success: bookRes => {
+            if (!bookRes || !bookRes.data || bookRes.data.code && bookRes.data.code >= 6000) {
+              reject(bookRes);
+              return;
+            }
+            resolve(bookRes.data);
           },
           fail: info => {
-            console.log('fail info ', info)
-            wx.showModal({
-              title: '查询书籍失败',
-              content: JSON.stringify(info)
-            })
             reject(info)
           }
         })
       })
     },
-    addBook: function () {
-      let _self = this;
-      console.log(_self)
-      wx.scanCode({
-        scanType: ['barCode'],
-        success: res => {
-          if (!res || !res.result) return;
-          this.queryBookByISBN(res.result).then((bookRes) => {
-            if (!bookRes || !bookRes.data) return;
-            let bookInfo = bookRes.data;
-            _self.addBookToDB(res.result, bookInfo).then(dbRes => {
-              //将书加到显示列表中
-              let theDate = new Date();
-              let theDateArr = [theDate.getFullYear(), theDate.getMonth() + 1, theDate.getDate()];
-              _self.data.bookList.push({
-                image: bookInfo.image,
-                title: bookInfo.title,
-                author: bookInfo.author && bookInfo.author.join(','),
-                createAt: theDateArr.join('-')
-              })
-              _self.setData({
-                bookList: _self.data.bookList
-              })
-            }, addErr => {
-              console.log(addErr)
-              wx.showModal({
-                title: 'queryBookByISBN失败',
-                content: JSON.stringify(addErr)
-              })
-            }).catch(addErr => {
-              console.log(addErr)
-              wx.showToast({
-                icon: 'none',
-                title: '添加数据库失败'
-              })
-            })
-          }).catch(dbErr => {
-            console.log(dbErr)
-            wx.showModal({
-              title: '查询书籍数据失败',
-              content: JSON.stringify(dbErr)
-            })
-            // wx.showToast({
-            //   icon: 'none',
-            //   title: '查询书籍数据失败'
-            // })
-          })
-
-        },
-        fail: scanRes => {
-          wx.showModal({
-            title: '获取扫描数据失败',
-            content: JSON.stringify(scanRes)
-          })
-        }
+    //扫描获取isbn
+    scanBook: function () {
+      return new Promise(function (resolve, reject) {
+        wx.scanCode({
+          scanType: ['barCode'],
+          success: res => {
+            if (!res || !res.result) {
+              reject();
+              return;
+            }
+            resolve(res.result);
+          },
+          fail: scanRes => {
+            reject(scanRes)
+          }
+        })
       })
+    },
+    //点击添加按钮执行
+    addBook: function () {
+      try {
+        this.scanBook().then(isbnId => {
+          this.checkWhetherbookExsist(isbnId).then((total) => {
+            this.queryBookByISBN(isbnId).then((bookInfo) => {
+              this.addBookToDB(isbnId, bookInfo).then(dbRes => {
+                wx.showToast({
+                  title: '添加成功',
+                  icon: 'success'
+                })
+                //将书加到显示列表中
+                let theDate = new Date();
+                let theDateArr = [theDate.getFullYear(), theDate.getMonth() + 1, theDate.getDate()];
+                this.data.bookList.unshift({
+                  image: bookInfo.image,
+                  title: bookInfo.title,
+                  author: bookInfo.author && bookInfo.author.join(','),
+                  createAt: theDateArr.join('-')
+                })
+                this.setData({
+                  bookList: this.data.bookList
+                })
+              }).catch(err => {
+                console.log(err)
+              })
+            }).catch(err => {
+              console.log(err)
+            })
+          }).catch(err => {
+            console.log(err)
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      } catch (err) {
+        //添加日志
+      }
     },
     getUserInfo: function () {
       if (!app.globalData.userInfo) {
@@ -158,28 +167,17 @@ Component({
         })
       }
     },
+    //添加到数据库
     addBookToDB: function (scanId, info) {
-      return new Promise((resolve, reject) => {
-        const db = wx.cloud.database();
-        db.collection('books').where({
-          scanId: scanId
-        }).count().then(findRes => {
-          if (!findRes) reject('count DB error');
-          if (!findRes.total || findRes > 0) reject('already exsist');
-          let tobeStored = Object.assign({
-            scanId: scanId,
-            userInfo: app.globalData.userInfo,
-            createAt: new Date()
-          }, info);
-          return db.collection('books').add({
-            data: tobeStored
-          }).then(res => {
-            resolve(res);
-          }).catch(err => {
-            reject(err)
-          })
-        });
-      })
+      const db = wx.cloud.database();
+      let tobeStored = Object.assign({
+        scanId: scanId,
+        userInfo: app.globalData.userInfo,
+        createAt: new Date()
+      }, info);
+      return db.collection('books').add({
+        data: tobeStored
+      });
     },
     //提供删除功能
   }

@@ -27,7 +27,7 @@
   .mybook-add {
     align-self: flex-end;
     display: inline-block;
-    width: 205rpx;
+    width: 300rpx;
     border-radius: 5rpx;
     padding: 0;
     background: rgb(66, 165, 245);

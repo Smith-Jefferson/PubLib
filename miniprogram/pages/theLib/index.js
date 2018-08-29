@@ -18,7 +18,6 @@ Page({
         url: '/pages/index/index',
       })
     }
-    console.log(option)
     this.setData({
       openId: option.uid
     })

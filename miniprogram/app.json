@@ -11,18 +11,20 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Public Library",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true
   },
   "tabBar":{
     "list":[{
       "pagePath":"pages/index/index",
-      "text":"书单"
+      "text":"所有书籍"
     },{
       "pagePath": "pages/myLib/index",
-      "text": "我的"
+      "text": "我的书库"
     }],
     "color":"#333",
     "background-color":"#ccc"
   },
-  "debug":true
+  "debug":true,
+  "cloud":true
 }

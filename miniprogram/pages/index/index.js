@@ -4,13 +4,12 @@ const app = getApp()
 Page({
   data: {
     from: 0,
-    limit: 30,
+    limit: 20,
     end: false,
     keywords: '',
     inputValue: '',
     bookList: []
   },
-
   onLoad: function () {
     if (!wx.cloud) {
       return
@@ -23,18 +22,43 @@ Page({
         app.globalData.openId = res.result.openid; //注意此处小写
         wx.getUserInfo({
           success: res => {
-            app.globalData.userInfo = res.userInfo
+            app.globalData.userInfo = res.userInfo;
+            this.setData({
+              from: 0,
+              end: false,
+              bookList: []
+            })
+            this.getBooksFromDB();
           }
         })
       },
       fail: err => {
-
+        wx.navigateTo({
+          url: '/pages/login/index',
+        })
       }
     });
 
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+
 
   },
-  onShow: function () {
+  onPullDownRefresh: function (e) {
+    this.setData({
+      from: 0,
+      end: false,
+      bookList: []
+    })
+    this.getBooksFromDB();
+    wx.stopPullDownRefresh();
+  },
+  onReachBottom: function (e) {
+    if (this.data.end) return;
+    this.setData({
+      from: this.data.from + this.data.limit
+    })
     this.getBooksFromDB();
   },
   bindKeyInput: function (e) {
@@ -60,59 +84,9 @@ Page({
       url: '../theLib/index?uid=' + e.currentTarget.dataset.uid
     })
   },
-  toLower: function (e) {
-    if (this.data.end) return;
-    this.setData({
-      from: this.data.from + this.data.limit
-    })
-    this.getBooksFromDB();
-  },
-  /**云函数，有bug无法运行 */
-  /**
-  getBooksFromDB() {
-    if (this.data.end) return;
-    wx.cloud.callFunction({
-      name: 'searchBooks',
-      data: {
-        from: this.data.from,
-        keywords: this.data.keywords,
-        limit: this.data.limit
-      }
-    }).then(res => {
-      if (!res || !res.data || res.data.length == 0) {
-        this.setData({
-          bookList: []
-        });
-        return
-      }
-      let books = res.data.map(ele => {
-        let theDate = new Date(ele.createAt);
-        let theDateArr = [theDate.getFullYear(), theDate.getMonth() + 1, theDate.getDate()];
-        return {
-          image: ele.image,
-          title: ele.title,
-          author: ele.author && ele.author.join(','),
-          createAt: theDateArr.join('-'),
-          openId: ele._openid,
-          userInfo: ele.userInfo
-        }
-      });
 
-      this.setData({
-        bookList: this.data.bookList.concat(books)
-      });
-      //必须分开，否则不渲染booklist？？
-      if (res.data.length <= limit) {
-        this.setData({
-          end: true
-        })
-      }
-
-    }).catch(err=>{
-      console.log(err)
-    })
-  } */
   getBooksFromDB() {
+    console.log('getting books')
     if (this.data.end) return;
     const db = wx.cloud.database();
     let collections = db.collection('books');
@@ -124,7 +98,9 @@ Page({
     if (this.data.from > 0) {
       collections = collections.skip(this.data.from)
     }
-    collections.limit(this.data.limit).get({
+    collections.limit(this.data.limit).orderBy(
+      'createAt', 'desc'
+    ).get({
       success: res => {
         console.log('got books from db', res.data)
         if (!res.data || res.data.length == 0) {

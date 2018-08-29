@@ -25,14 +25,14 @@ Page({
       }
     })
   },
+  onPullDownRefresh: function (e) {
+    wx.stopPullDownRefresh();
+  },
 
   onGetUserInfo: function (e) {
     if (e.detail.userInfo) {
       app.globalData.logged = true;
-      app.globalData.userInfo = {
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
-      }
+      app.globalData.userInfo = e.detail.userInfo
       //添加到数据库
       const db = wx.cloud.database();
       let tobeStored = {
@@ -44,7 +44,6 @@ Page({
         _openid: app.globalData.openId
       }).get({
         success: res => {
-          console.log('users',res)
           if (res.data && res.data.length > 0) {
             wx.navigateBack({
               delta: 1
@@ -54,15 +53,15 @@ Page({
           db.collection('users').add({
             data: tobeStored,
             success: res => {
-              wx.showToast({
-                title: '添加成功',
-              })
+              // wx.showToast({
+              //   title: '添加成功',
+              // })
             },
             fail: err => {
-              wx.showToast({
-                icon: 'none',
-                title: '新增记录失败'
-              })
+              // wx.showToast({
+              //   icon: 'none',
+              //   title: '新增记录失败'
+              // })
             },
             complete: res => {
               wx.navigateBack({
@@ -78,11 +77,6 @@ Page({
           })
         }
       })
-
-
-
-
-
     }
   }
 })

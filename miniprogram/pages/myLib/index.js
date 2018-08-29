@@ -6,7 +6,7 @@ Page({
     openId: ''
   },
 
-  onLoad: function() {
+  onLoad: function () {
     this.setData({
       openId: app.globalData.openId
     })
@@ -29,7 +29,14 @@ Page({
         }
       }
     })
-  }
+
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+  onPullDownRefresh: function (e) {
+    wx.stopPullDownRefresh();
+  },
 
 
 })

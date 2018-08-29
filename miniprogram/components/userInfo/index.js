@@ -17,7 +17,7 @@ Component({
    */
   data: {
     userInfo: {
-      avatarUrl: './user-unlogin.png',
+      avatarUrl: app.globalData.userInfo && app.globalData.userInfo.avatarUrl || './user-unlogin.png',
       nickName: app.globalData.userInfo && app.globalData.userInfo.nickName
     },
     contact: {}
@@ -32,7 +32,6 @@ Component({
         _openid: this.data.openId
       }).get({
         success: res => {
-          console.log('res', res)
           if (!res.data || res.data.length == 0) {
             return;
           }

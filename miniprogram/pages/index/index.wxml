@@ -5,7 +5,7 @@
     <input placeholder="书非借不能读" bindinput="bindKeyInput" class="searchbox-keyword"/>
     <button bindtap="searchBooks" type="default" size="mini">有没有？</button>
   </view>
-  <scroll-view scroll-y="{{!end}}" enable-back-to-top="true" bindscrolltolower="toLower">
+  <view>
     <view wx:for="{{bookList}}" data-uid="{{item.openId}}" wx:key="index" class="item" bindtap="getMoreInfo">
       <view class="item-image">
         <image class="item-book-image" src="{{item.image}}"></image>
@@ -25,5 +25,5 @@
         <image class="item-user-image" src="{{item.userInfo.avatarUrl}}"></image>
       </view>
     </view>
-  </scroll-view>
+  </view>
 </view>
