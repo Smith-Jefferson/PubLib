@@ -1,0 +1,43 @@
+<!-- activities 图片上传todo -->
+<view class="activity">
+  <form bindsubmit="submit">
+    <view class="act-image">
+      <image src="{{imagePath}}" bindtap="chooseImage"></image>
+    </view>
+    <view class="activity-item">
+      <text class="activity-item-label">活动标题:</text>
+      <text wx:if="{{!isMe}}" class="activity-item-value">{{activityInfo.title}}</text>
+      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange" />
+    </view>
+    <view class="activity-item">
+      <text class="activity-item-label">活动时间:</text>
+      <text wx:if="{{!isMe}}" class="activity-item-value">
+        {{activityInfo.date}} {{activityInfo.fromTime}}-{{activityInfo.toTime}}
+      </text>
+      <picker wx:if="{{isMe}}" mode="date" adjust-position="true" class="activity-date activity-item-value" value="{{activityInfo.date}}" bindchange="bindDateChange">
+        <view class="picker">{{activityInfo.date}}</view>
+      </picker>
+      <picker wx:if="{{isMe}}" mode="time" adjust-position="true" class="activity-item-value" value="{{activityInfo.fromTime}}" bindchange="bindFTimeChange">
+        <view class="picker">{{activityInfo.fromTime}}</view>
+      </picker>
+      <text wx:if="{{isMe}}">-</text>
+      <picker wx:if="{{isMe}}" mode="time" adjust-position="true" class="activity-item-value" value="{{activityInfo.toTime}}" bindchange="bindTTimeChange">
+        <view class="picker">{{activityInfo.toTime}}</view>
+      </picker>
+    </view>
+    <view class="activity-item">
+      <text class="activity-item-label">创建人:</text>
+      <text class="activity-item-value">{{activityInfo.userInfo.nickName}}</text>
+    </view>
+    <view class="activity-item-column activity-item">
+      <text class="activity-item-label">活动详情:</text>
+      <text wx:if="{{!isMe}}" class="activity-item-value">{{activityInfo.detail}}</text>
+      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" />
+    </view>
+    <view class="activity-item activity-item-btn">
+      <button wx:if="{{isMe}}" form-type="submit" class="btn" disabled="{{buttonDisabled}}" size="mini">
+        发起活动
+      </button>
+    </view>
+  </form>
+</view>

@@ -1,0 +1,92 @@
+.act-image {
+  width: 100%;
+  height: 400rpx;
+  margin-bottom: 50rpx;
+}
+
+.act-image image {
+  width: 100%;
+  height: 400rpx;
+}
+
+.activity {
+  height: auto;
+  width: 100%;
+  background: #fff;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  transition: all 300ms ease;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+form {
+  width: inherit;
+}
+
+.activity-title {
+  font-size: 34rpx;
+  line-height: 50rpx;
+  font-weight: bold;
+}
+
+
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  line-height: 50rpx;
+  align-items: center;
+  font-size: 32rpx;
+}
+
+.activity-item-label {
+  font-size: 32rpx;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.activity-item-value {
+  color: #000;
+}
+
+.activity-date {
+  margin-right: 10rpx;
+}
+
+.activity-item.activity-item-column {
+  flex-direction: column;
+  height: auto;
+  align-items: left;
+}
+.activity-item.activity-item-column .activity-item-value{
+  height: auto;
+  min-height: 300px;
+}
+
+.activity-item.activity-item-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.activity-item textarea{
+  min-height: 300px;
+  height: auto;
+}
+
+.activity-item .btn {
+  align-self: flex-end;
+  display: inline-block;
+  width: 300rpx;
+  border-radius: 5rpx;
+  padding: 0;
+  background: rgb(66, 165, 245);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.activity-item .btn[disabled] {
+  background: rgb(136, 190, 235);
+}

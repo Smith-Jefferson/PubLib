@@ -4,5 +4,6 @@
 <userInfo wx-if="{{openId}}" open-id="{{openId}}"></userInfo>
 <!-- booklist -->
   <myBooks wx-if="{{openId}}" open-id="{{openId}}"></myBooks>
+  <myActivity  wx-if="{{openId}}" open-id="{{openId}}"></myActivity>
 </view>
 

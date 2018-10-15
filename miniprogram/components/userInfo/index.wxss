@@ -1,65 +1,95 @@
-.userheader{
+.userheader {
   display: flex;
   flex-direction: column;
 }
+
 .user-image {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 40rpx 0 20rpx 0;
-  }
-  
-  .user-image image {
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50px;
-  }
-  
-  .user-name {
-    width: 100%;
-    font-size: 32rpx;
-    color: #333;
-    text-align: center;
-  }
-  
-  .contact {
-    margin-top: 40rpx;
-    height: auto;
-    width: 100%;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-left: none;
-    border-right: none;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    transition: all 300ms ease;
-    padding: 20rpx;
-    box-sizing: border-box;
-  }
-  
-  .contact-title {
-    font-size: 34rpx;
-    line-height: 50rpx;
-    font-weight: bold;
-  }
-  
-  .contact-list {}
-  
-  .contact-item {
-    display: flex;
-    flex-direction: row;
-    line-height: 40rpx;
-    align-items: center;
-  }
-  
-  .contact-item-label {
-    font-size: 32rpx;
-    color: #666;
-    margin-right: 20rpx;
-  }
-  
-  .contact-item-value {
-    font-size: 36rpx;
-    color: #000;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 40rpx 0 20rpx 0;
+}
+
+.user-image image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50px;
+}
+
+.user-name {
+  width: 100%;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+}
+
+.contact {
+  margin-top: 40rpx;
+  height: auto;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  transition: all 300ms ease;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.contact-title {
+  font-size: 34rpx;
+  line-height: 50rpx;
+  font-weight: bold;
+}
+
+.contact-list {}
+
+.contact-item {
+  display: flex;
+  flex-direction: row;
+  line-height: 40rpx;
+  align-items: center;
+}
+
+.contact-item-label {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.contact-item-value {
+  font-size: 36rpx;
+  color: #000;
+}
+
+.group-item .contact-item-label {
+  color: #06c;
+  margin-right: 10rpx;
+}
+
+.group-item .contact-item-label:after {
+  content: " / ";
+}
+
+.group-item .contact-item-label:last-child:after {
+  content: "";
+}
+.group .contact-title{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.group .contact-title .title{
+  flex:1;
+}
+.group .contact-title .add {
+  color:#06c;
+  align-self: flex-end;
+  font-weight:normal;
+}
+.tips{
+  color: #ccc;
+  font-size: 24rpx;
+}

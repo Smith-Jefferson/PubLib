@@ -1,0 +1,33 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="searchbox">
+    <picker mode="date" adjust-position="true" class="" value="{{searchDate}}" bindchange="bindDateChange">
+      <view class="picker">{{searchDate}}</view>
+    </picker>
+    <button bindtap="search" type="default" size="mini">按日期查找</button>
+  </view>
+  <view>
+    <view wx:for="{{activities}}" data-id="{{item._id}}" data-info="{{item}}" wx:key="index" class="item" bindtap="getMoreInfo">
+      <view class="item-image">
+        <image class="item-book-image" src="{{item.imageTempURL}}"></image>
+      </view>
+      <view class="item-info">
+        <view class="item-title">
+          <text>{{item.title}}</text>
+        </view>
+        <view class="item-sub">
+          <text>{{item.date}} {{item.fromTime}}-{{item.toTime}}</text>
+        </view>
+        <view class="item-sub">
+          <text>{{item.location}}</text>
+        </view>
+      </view>
+      <view class="item-user">
+        <view class="item-text">
+          <text>By</text>
+        </view>
+        <image class="item-user-image" src="{{item.userInfo.avatarUrl}}"></image>
+      </view>
+    </view>
+  </view>
+</view>

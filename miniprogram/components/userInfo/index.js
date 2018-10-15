@@ -24,42 +24,51 @@ Component({
   },
   lifetimes: {
     attached: function () {
-      this.setData({
-        isMe: this.data.openId === app.globalData.openId
-      })
-      const db = wx.cloud.database();
-      db.collection('users').where({
-        _openid: this.data.openId
-      }).get({
-        success: res => {
-          if (!res.data || res.data.length == 0) {
-            return;
-          }
-          this.setData({
-            _id: res.data[0]._id,
-            userInfo: res.data[0].userInfo,
-            contact: res.data[0].contact
-          })
-        },
-        fail: err => {
-          if (this.data.openId == app.globalData.openId) {
-            wx.navigateTo({
-              url: '/pages/login/index',
-            })
-          }
-        }
-      })
+      this.init();
+    }
+  },
+  pageLifetimes: {
+    show: function () {
+      this.init();
     }
   },
   /**
    * 组件的方法列表
    */
   methods: {
-    editSkypeId: function (e) {
-      let skypeId = e.detail.value;
-      this.editContact({
-        skypeId: skypeId
+    init: function () {
+      this.setData({
+        isMe: this.data.openId === app.globalData.openId
       })
+      
+      wx.cloud.callFunction({
+        name: 'getUserInfo',
+        data: {
+          uid: this.data.openId
+        }
+      }).then(res => {
+        if (!res || !res.result) {
+          return;
+        }
+        console.log('userInfo',res.result)
+        this.setData(res.result);
+      })
+    },
+    editSkypeId: function (e) {
+      if (!e.detail.value || e.detail.value == this.data.contact.skypeId) {
+        return;
+      }
+      let contact = this.data.contact;
+      contact.skypeId = e.detail.value;
+      this.editContact(contact)
+    },
+    editWechatId: function (e) {
+      if (!e.detail.value || e.detail.value == this.data.contact.wechatId) {
+        return;
+      }
+      let contact = this.data.contact;
+      contact.wechatId = e.detail.value;
+      this.editContact(contact)
     },
     editContact: function (info) {
       const db = wx.cloud.database();
@@ -77,6 +86,17 @@ Component({
           title: '更新失败',
           icon: 'none'
         })
+      })
+    },
+    getGroupInfo: function (e) {
+      wx.setStorageSync('gId' + e.currentTarget.dataset.gid, e.currentTarget.dataset.igroup);
+      wx.navigateTo({
+        url: '../theGroup/index?id=' + e.currentTarget.dataset.gid
+      })
+    },
+    addGroup: function (e) {
+      wx.navigateTo({
+        url: '../theGroup/index'
       })
     }
   }

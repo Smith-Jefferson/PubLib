@@ -4,7 +4,10 @@
     "pages/myLib/index",
     "pages/theLib/index",
     "pages/bookList/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/activityList/index",
+    "pages/theActivity/index",
+    "pages/theGroup/index"
   ],
   "window": {
     "backgroundColor": "#fff",
@@ -12,19 +15,22 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Public Library",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh":true
+    "enablePullDownRefresh": true
   },
-  "tabBar":{
-    "list":[{
-      "pagePath":"pages/index/index",
-      "text":"所有书籍"
-    },{
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "书单"
+    }, {
+      "pagePath": "pages/activityList/index",
+      "text": "活动"
+    }, {
       "pagePath": "pages/myLib/index",
-      "text": "我的书库"
+      "text": "我的"
     }],
-    "color":"#333",
-    "background-color":"#ccc"
+    "color": "#333",
+    "background-color": "#ccc"
   },
-  "debug":true,
-  "cloud":true
+  "debug": true,
+  "cloud": true
 }

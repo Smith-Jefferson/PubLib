@@ -1,23 +1,39 @@
- <view class="userheader">
-    <view class="user-image">
-      <image src="{{userInfo.avatarUrl}}"></image>
-    </view>
-    <text class="user-name">{{userInfo.nickName}}</text>
+<view class="userheader">
+  <view class="user-image">
+    <image src="{{userInfo.avatarUrl}}"></image>
   </view>
-
-
-  <!-- 联系方式 -->
-  <view class="contact">
-    <view class="contact-title">
-      <text>联系方式</text>
+  <text class="user-name">{{userInfo.nickName}}</text>
+</view>
+<!-- 联系方式 -->
+<view class="contact">
+  <view class="contact-title">
+    <text>联系方式</text>
+  </view>
+  <view class="contact-list">
+    <view class="contact-item" wx:if="{{isMe || contact.skypeId}}">
+      <text class="contact-item-label">Skype:</text>
+      <text wx:if="{{!isMe}}" class="contact-item-value">{{contact.skypeId}}</text>
+      <input wx:if="{{isMe}}" bindblur="editSkypeId" type="text" adjust-position="true" class="contact-item-value" value="{{contact.skypeId}}" />
     </view>
-
-
-    <view class="contact-list">
-      <view class="contact-item">
-        <text class="contact-item-label">Skype:</text>
-        <text wx:if="{{!isMe}}" class="contact-item-value">{{contact.skypeId}}</text>
-        <input wx:if="{{isMe}}" bindblur="editSkypeId" type="text" adjust-position="true" class="contact-item-value" value="{{contact.skypeId}}"/>
-      </view>
+    <view class="contact-item" wx:if="{{isMe || contact.wechatId}}">
+      <text class="contact-item-label">微信号:</text>
+      <text wx:if="{{!isMe}}" class="contact-item-value">{{contact.wechatId}}</text>
+      <input wx:if="{{isMe}}" bindblur="editSkypeId" type="text" adjust-position="true" class="contact-item-value" value="{{contact.wechatId}}" />
     </view>
   </view>
+</view>
+<!-- 组织 -->
+<view class="contact group">
+  <view class="contact-title">
+    <text class="title">所属组织</text>
+    <text wx-if="{{isMe}}" class="add" bindtap="addGroup">创建组织</text>
+  </view>
+  <view class="contact-list">
+    <view wx:if="{{!groups || groups.length == 0}}" class="contact-item group-item tips">
+      要加入组织才能看见组织其他人的书哦！
+    </view>
+    <view class="contact-item group-item" >
+      <text class="contact-item-label" bindtap="getGroupInfo" data-igroup="{{item}}" data-gid="{{item._id}}" wx:for="{{groups}}" wx:key="unique">{{item.title}}</text>
+    </view>
+  </view>
+</view>

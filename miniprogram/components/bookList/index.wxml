@@ -1,7 +1,7 @@
 <!-- miniprogram/components/bookList/index.wxml -->
 <view class="mybook">
     <view class="mybook-title">
-        <text>我的书库</text>
+        <text><text wx-if="{{isMe}}">我</text><text wx-if="{{!isMe}}">Ta</text>的书库</text>
         <button wx-if="{{isMe}}" size="mini" style="default" class="mybook-add" bindtap="addBook" >来啊~ 扫一扫啊</button>
     </view>
     <view class="item" wx:for="{{bookList}}" wx:key="unique">

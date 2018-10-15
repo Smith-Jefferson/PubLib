@@ -1,0 +1,43 @@
+<!-- activities 图片上传todo -->
+<view class="activity">
+  <form bindsubmit="submit">
+    <view class="act-image">
+      <image src="{{imagePath}}" bindtap="chooseImage"></image>
+    </view>
+    <view class="activity-item">
+      <text class="activity-item-label">组织标题:</text>
+      <text wx:if="{{!isMe}}" class="activity-item-value">{{groupInfo.title}}</text>
+      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange" />
+    </view>
+    <view class="activity-item">
+      <text class="activity-item-label">创建人:</text>
+      <view class="activity-item-value">
+        <image class="userAvatar" src="{{groupInfo.userInfo.avatarUrl}}"></image>
+      </view>
+    </view>
+    <view class="activity-item-column activity-item" wx:if="{{!isNew}}">
+      <text class="activity-item-label">已加入人员:</text>
+      <view class="activity-item-value">
+        <image class="userAvatar" wx:for="{{groupMembers}}" wx:key="unique" src="{{item.userInfo.avatarUrl}}"></image>
+      </view>
+    </view>
+    <view class="activity-item-column activity-item">
+      <text class="activity-item-label">组织描述:</text>
+      <text wx:if="{{!isMe}}" class="activity-item-value">{{groupInfo.detail}}</text>
+      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" />
+    </view>
+    <view class="tips">分享此页即可邀请别人加入该组织哦！</view>
+    <view class="activity-item activity-item-btn">
+      <button wx:if="{{isNew}}" form-type="submit" class="btn" disabled="{{buttonDisabled}}" size="mini">
+        创建并加入
+      </button>
+      <button wx:if="{{isMe && !isNew}}" form-type="submit" class="btn" disabled="{{buttonDisabled}}" size="mini">
+        保存
+      </button>
+      <button wx:if="{{!isMe}}" class="btn" size="mini" bindtap="join" disabled="{{isMember}}">
+        <text wx:if="{{!isMember}}">加入</text>
+        <text wx:if="{{isMember}}">已加入</text>
+      </button>
+    </view>
+  </form>
+</view>

@@ -1,6 +1,7 @@
 {
     "usingComponents": {
       "myBooks": "../../components/bookList/index",
-      "userInfo":"../../components/userInfo/index"
+      "userInfo":"../../components/userInfo/index",
+      "myActivity":"../../components/activityList/index"
     }
   }

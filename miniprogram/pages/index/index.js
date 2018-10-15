@@ -15,6 +15,11 @@ Page({
       return
     }
 
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+  init(){
     wx.cloud.callFunction({
       name: 'login',
       data: {},
@@ -28,7 +33,7 @@ Page({
               end: false,
               bookList: []
             })
-            this.getBooksFromDB();
+            this.getBooks();
           }
         })
       },
@@ -38,20 +43,23 @@ Page({
         })
       }
     });
-
-    wx.showShareMenu({
-      withShareTicket: true
-    })
-
-
   },
-  onPullDownRefresh: function (e) {
+  refresh:function(){
     this.setData({
       from: 0,
+      limit: 20,
       end: false,
+      keywords: '',
+      inputValue: '',
       bookList: []
-    })
-    this.getBooksFromDB();
+    });
+    getCurrentPages().reverse()[0].onShow();
+  },
+  onShow: function () {
+    this.init();
+  },
+  onPullDownRefresh: function (e) {
+    this.refresh();
     wx.stopPullDownRefresh();
   },
   onReachBottom: function (e) {
@@ -59,7 +67,7 @@ Page({
     this.setData({
       from: this.data.from + this.data.limit
     })
-    this.getBooksFromDB();
+    this.getBooks();
   },
   bindKeyInput: function (e) {
     this.setData({
@@ -76,25 +84,67 @@ Page({
       keywords: this.data.inputValue,
       bookList: []
     });
-    this.getBooksFromDB()
+    this.getBooks()
   },
   getMoreInfo: function (e) {
     //传参
     wx.navigateTo({
-      url: '../theLib/index?uid=' + e.currentTarget.dataset.uid
+      url: '/pages/theLib/index?uid=' + e.currentTarget.dataset.uid
     })
   },
-
-  getBooksFromDB() {
-    console.log('getting books')
+  getUserInfoFromDB() {
+    const db = wx.cloud.database();
+    return db.collection('users').where({
+      _openid: app.globalData.openId
+    }).get().catch(console.error)
+  },
+  getUsersByGroup(groups) {
+    if (!groups || groups.length == 0) {
+      return;
+    }
+    console.log('groups', groups)
+    return wx.cloud.callFunction({
+      name: 'getOpenIdsByGroups',
+      data: {
+        groups
+      }
+    }).catch(console.error);
+  },
+  getBooks() {
+    this.getUserInfoFromDB().then(uRes => {
+      let userInfo = uRes && uRes.data && uRes.data[0];
+      if (!userInfo) {
+        return;
+      }
+      let {
+        groups
+      } = userInfo;
+      this.getUsersByGroup(groups).then(oRes => {
+        if (!oRes || !oRes.result) {
+          return;
+        }
+        wx.setStorage({
+          key: 'myLeague',
+          data: oRes.result,
+          complete: console.log
+        })
+        this.getBooksFromDB(oRes.result);
+      })
+    });
+  },
+  getBooksFromDB(openIds) {
     if (this.data.end) return;
     const db = wx.cloud.database();
+    const _ = db.command;
     let collections = db.collection('books');
-    if (this.data.keywords) {
-      collections = collections.where({
-        title: this.data.keywords
-      });
+    let filterObj = {
+      _openid: _.in(openIds)
     }
+
+    if (this.data.keywords) {
+      filterObj.title = this.data.keywords
+    }
+    collections = collections.where(filterObj);
     if (this.data.from > 0) {
       collections = collections.skip(this.data.from)
     }
@@ -102,7 +152,6 @@ Page({
       'createAt', 'desc'
     ).get({
       success: res => {
-        console.log('got books from db', res.data)
         if (!res.data || res.data.length == 0) {
           this.setData({
             end: true

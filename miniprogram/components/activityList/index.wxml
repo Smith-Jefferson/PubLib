@@ -1,0 +1,33 @@
+<!-- miniprogram/components/activityList/index.wxml -->
+<view class="mybook">
+    <view class="mybook-title">
+        <text><text wx-if="{{isMe}}">我</text><text wx-if="{{!isMe}}">Ta</text>的活动</text>
+        <button wx-if="{{isMe}}" size="mini" style="default" class="mybook-add" bindtap="addActivity">
+            发起活动
+        </button>
+    </view>
+    <view class="item" wx:for="{{activities}}" data-id="{{item._id}}" data-info="{{item}}" wx:key="unique" bindtap="getMoreInfo">
+        <view class="item-image">
+            <image class="item-book-image" src="{{item.imageTempURL}}"></image>
+        </view>
+        <view class="item-info">
+            <view class="item-title">
+                <text>{{item.title}}</text>
+            </view>
+            <view class="item-sub">
+                <text>{{item.date}} {{item.fromTime}}-{{item.toTime}}</text>
+            </view>
+            <view class="item-sub">
+                <text>{{item.location}}</text>
+            </view>
+        </view>
+        <view class="item-user">
+            <view class="item-text">
+                <text>于</text>
+            </view>
+            <view class="item-date">
+                <text>{{item.createdAt}}</text>
+            </view>
+        </view>
+    </view>
+</view>

@@ -80,7 +80,6 @@ Component({
     },
     //查询豆瓣接口
     queryBookByISBN: function (isbnId) {
-      console.log('isbnid', isbnId)
       return new Promise(function (resolve, reject) {
         wx.request({
           method: 'GET',

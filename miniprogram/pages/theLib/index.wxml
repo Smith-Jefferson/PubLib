@@ -1,8 +1,7 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
- 
-<userInfo wx-if="{{openId}}" open-id="{{openId}}"></userInfo>
-<!-- booklist -->
+  <userInfo wx-if="{{openId}}" open-id="{{openId}}"></userInfo>
+  <!-- booklist -->
   <myBooks wx-if="{{openId}}" open-id="{{openId}}"></myBooks>
+  <theActivity wx-if="{{openId}}" open-id="{{openId}}"></theActivity>
 </view>
-
