@@ -2,7 +2,8 @@
 <view class="mybook">
     <view class="mybook-title">
         <text><text wx-if="{{isMe}}">我</text><text wx-if="{{!isMe}}">Ta</text>的书库</text>
-        <button wx-if="{{isMe}}" size="mini" style="default" class="mybook-add" bindtap="addBook" >来啊~ 扫一扫啊</button>
+        <text class="tips" wx:if="{{isMe}}">扫书的条形码即可</text>
+        <button wx-if="{{isMe}}" size="mini" style="default" class="mybook-add" bindtap="addBook" >扫码有惊喜!</button>
     </view>
     <view class="item" wx:for="{{bookList}}" wx:key="unique">
         <view class="item-image">

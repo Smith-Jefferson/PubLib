@@ -21,12 +21,16 @@ Page({
       })
       return
     }
+    this.setData({
+      id: option.id || ''
+    })
 
     // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           app.globalData.logged = true;
+          this.init();
         } else {
           wx.navigateTo({
             url: '/pages/login/index',
@@ -34,13 +38,22 @@ Page({
         }
       }
     })
+    //分享功能
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+  },
+  onPullDownRefresh: function (e) {
+    wx.stopPullDownRefresh();
+  },
+  init: function () {
     this.setData({
       userInfo: Object.assign({
         openId: app.globalData.openId
       }, app.globalData.userInfo)
     })
     //创建活动
-    if (!option.id) {
+    if (!this.data.id) {
 
       this.setData({
         isNew: true,
@@ -52,31 +65,30 @@ Page({
         isMe: true
       })
     } else {
-      let groupInfo = wx.getStorageSync('gId' + option.id);
+      let groupInfo = wx.getStorageSync('gId' + this.data.id);
       if (!groupInfo) {
+        const db = wx.cloud.database();
         db.collection('groups').where({
-          _id: option.id
+          _id: this.data.id
         }).get().then((gRes) => {
           if (gRes && gRes.data && gRes.data.length > 0) {
             groupInfo = gRes.data[0];
             this.initAfterGroupInfo(groupInfo);
           }
-        })
+        }).catch(console.error)
       } else {
         this.initAfterGroupInfo(groupInfo);
       }
-      this.checkFormValid();
+       this.checkFormValid();
     }
-
-    //分享功能
-    wx.showShareMenu({
-      withShareTicket: true
-    })
+    wx.showTabBar({
+      animation:false
+    });
   },
   onShareAppMessage: function (res) {
-    console.log('from', res);
     return {
-      title: '邀请您加入组织~'
+      title: '邀请您加入组织，共享图书~',
+      path: '/pages/theGroup/index?id=' + this.data.groupInfo._id
     }
   },
   initAfterGroupInfo: function (groupInfo) {
@@ -113,7 +125,6 @@ Page({
         members
       },
       success: (res) => {
-        console.log('groupMembers', res)
         this.setData({
           groupMembers: res.result
         })
@@ -195,7 +206,6 @@ Page({
     })
   },
   updateImageFileIdToDB(id, imageFileId) {
-    console.log('image save to db')
     const db = wx.cloud.database();
     return db.collection('groups').doc(id).update({
       data: {
@@ -231,7 +241,6 @@ Page({
               return;
             }
             this.updateImageFileIdToDB(aRes._id, uRes.fileID).then(() => {
-              console.log('joingroup')
               wx.cloud.callFunction({
                 name: 'joinGroup',
                 data: {

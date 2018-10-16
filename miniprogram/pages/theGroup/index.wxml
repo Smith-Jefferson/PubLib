@@ -7,7 +7,7 @@
     <view class="activity-item">
       <text class="activity-item-label">组织标题:</text>
       <text wx:if="{{!isMe}}" class="activity-item-value">{{groupInfo.title}}</text>
-      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange" />
+      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange" placeholder="请输入组织标题" maxlength="20" auto-focus="{{isNew}}"/>
     </view>
     <view class="activity-item">
       <text class="activity-item-label">创建人:</text>
@@ -24,7 +24,7 @@
     <view class="activity-item-column activity-item">
       <text class="activity-item-label">组织描述:</text>
       <text wx:if="{{!isMe}}" class="activity-item-value">{{groupInfo.detail}}</text>
-      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" />
+      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{groupInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" placeholder="请输入详细信息"/>
     </view>
     <view class="tips">分享此页即可邀请别人加入该组织哦！</view>
     <view class="activity-item activity-item-btn">

@@ -65,7 +65,7 @@ form {
 
 .activity-item.activity-item-btn {
   position: fixed;
-  bottom: 30rpx;
+  bottom: 50rpx;
   left: 0;
   right: 0;
 }
@@ -89,7 +89,11 @@ form {
 .tips {
   color: #666;
   font-size: 20rpx;
-  text-align:center;
+  text-align: center;
+  position: fixed;
+  bottom: 130rpx;
+  left: 0;
+  right: 0;
 }
 
 .userAvatar {

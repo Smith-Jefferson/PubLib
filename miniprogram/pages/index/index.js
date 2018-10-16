@@ -8,7 +8,8 @@ Page({
     end: false,
     keywords: '',
     inputValue: '',
-    bookList: []
+    bookList: [],
+    loading: true
   },
   onLoad: function () {
     if (!wx.cloud) {
@@ -19,7 +20,7 @@ Page({
       withShareTicket: true
     })
   },
-  init(){
+  init() {
     wx.cloud.callFunction({
       name: 'login',
       data: {},
@@ -31,7 +32,8 @@ Page({
             this.setData({
               from: 0,
               end: false,
-              bookList: []
+              bookList: [],
+              loading: true
             })
             this.getBooks();
           }
@@ -44,14 +46,15 @@ Page({
       }
     });
   },
-  refresh:function(){
+  refresh: function () {
     this.setData({
       from: 0,
       limit: 20,
       end: false,
       keywords: '',
       inputValue: '',
-      bookList: []
+      bookList: [],
+      loading: true
     });
     getCurrentPages().reverse()[0].onShow();
   },
@@ -69,6 +72,11 @@ Page({
     })
     this.getBooks();
   },
+  addGroup:function(e){
+    wx.navigateTo({
+      url: '/pages/theGroup/index'
+    })
+  },
   bindKeyInput: function (e) {
     this.setData({
       inputValue: e.detail.value
@@ -82,7 +90,8 @@ Page({
       end: false,
       from: 0,
       keywords: this.data.inputValue,
-      bookList: []
+      bookList: [],
+      loading: true
     });
     this.getBooks()
   },
@@ -96,39 +105,57 @@ Page({
     const db = wx.cloud.database();
     return db.collection('users').where({
       _openid: app.globalData.openId
-    }).get().catch(console.error)
+    }).get().catch(err=>{
+      console.error(err);
+      //error
+      this.setData({
+        loading:false
+      })
+    })
   },
   getUsersByGroup(groups) {
     if (!groups || groups.length == 0) {
-      return;
+      return Promise.resolve()
     }
-    console.log('groups', groups)
     return wx.cloud.callFunction({
       name: 'getOpenIdsByGroups',
       data: {
         groups
       }
-    }).catch(console.error);
+    }).catch(err => {
+      console.error(err);
+      //error
+      this.setData({
+        loading: false
+      })
+    });
   },
   getBooks() {
     this.getUserInfoFromDB().then(uRes => {
       let userInfo = uRes && uRes.data && uRes.data[0];
       if (!userInfo) {
-        return;
+        //error
+        this.setData({
+          loading: false
+        })
+        return Promise.reject();
       }
       let {
         groups
       } = userInfo;
       this.getUsersByGroup(groups).then(oRes => {
+        let myLeague;
         if (!oRes || !oRes.result) {
-          return;
+          myLeague=[app.globalData.openId];
+        }else{
+          myLeague=oRes.result;
         }
         wx.setStorage({
           key: 'myLeague',
-          data: oRes.result,
+          data: myLeague,
           complete: console.log
         })
-        this.getBooksFromDB(oRes.result);
+        this.getBooksFromDB(myLeague);
       })
     });
   },
@@ -159,7 +186,6 @@ Page({
           return;
         }
 
-
         let books = res.data.map(ele => {
           let theDate = new Date(ele.createAt);
           let theDateArr = [theDate.getFullYear(), theDate.getMonth() + 1, theDate.getDate()];
@@ -183,7 +209,12 @@ Page({
           })
         }
       },
-      fail: err => {}
+      fail: err => {},
+      complete: () => {
+        this.setData({
+          loading: false
+        })
+      }
     })
   }
 })

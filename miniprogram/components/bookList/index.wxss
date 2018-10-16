@@ -23,11 +23,17 @@
   .mybook-title text{
     flex:1;
   }
+  .mybook-title .tips{
+    text-align: right;
+    color: #ccc;
+    font-size:24rpx;
+    margin-right: 10rpx;
+  }
   
   .mybook-add {
     align-self: flex-end;
     display: inline-block;
-    width: 300rpx;
+    width: 248rpx;
     border-radius: 5rpx;
     padding: 0;
     background: rgb(66, 165, 245);

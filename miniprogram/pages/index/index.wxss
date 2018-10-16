@@ -136,3 +136,15 @@ page {
   text-align: center;
   color: rgb(66, 165, 245);
 }
+.tips{
+  margin-top: 300rpx;
+  text-align: center;
+  color: #ccc;
+  font-size: 24rpx;
+}
+.tips .oneline{
+  display: block;
+}
+.tips .t-button{
+  color: rgb(66, 165, 245);
+}

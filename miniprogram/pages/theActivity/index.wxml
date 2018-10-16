@@ -7,7 +7,7 @@
     <view class="activity-item">
       <text class="activity-item-label">活动标题:</text>
       <text wx:if="{{!isMe}}" class="activity-item-value">{{activityInfo.title}}</text>
-      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange" />
+      <input wx:if="{{isMe}}" name="title" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.title}}" bindblur="bindTitleChange" bindconfirm="bindTitleChange"  placeholder="请输入活动标题" maxlength="20" auto-focus="{{isNew}}"/>
     </view>
     <view class="activity-item">
       <text class="activity-item-label">活动时间:</text>
@@ -27,12 +27,14 @@
     </view>
     <view class="activity-item">
       <text class="activity-item-label">创建人:</text>
-      <text class="activity-item-value">{{activityInfo.userInfo.nickName}}</text>
+      <view class="activity-item-value">
+        <image class="userAvatar" src="{{activityInfo.userInfo.avatarUrl}}"></image>
+      </view>
     </view>
     <view class="activity-item-column activity-item">
-      <text class="activity-item-label">活动详情:</text>
+      <text class="activity-item-label">活动详情：</text>
       <text wx:if="{{!isMe}}" class="activity-item-value">{{activityInfo.detail}}</text>
-      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" />
+      <textarea wx:if="{{isMe}}" name="detail" type="text" adjust-position="true" class="activity-item-value" value="{{activityInfo.detail}}" bindblur="bindDetailChange" bindconfirm="bindDetailChange" placeholder="请输入活动详情"/>
     </view>
     <view class="activity-item activity-item-btn">
       <button wx:if="{{isMe}}" form-type="submit" class="btn" disabled="{{buttonDisabled}}" size="mini">

@@ -3,7 +3,7 @@ const app = getApp()
 
 Page({
   data: {
-    openId:''
+    openId: ''
   },
 
   onLoad: function (option) {
@@ -19,7 +19,7 @@ Page({
       })
     }
     this.setData({
-      openId: option.uid
+      openId: option.uid || ''
     })
   }
 

@@ -50,7 +50,9 @@ Page({
       this.checkFormValid();
     }
   },
-
+  onPullDownRefresh: function (e) {
+    wx.stopPullDownRefresh();
+  },
   bindDateChange: function (e) {
     let activityInfo = this.data.activityInfo;
     activityInfo.date = e.detail.value;

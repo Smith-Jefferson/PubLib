@@ -59,10 +59,15 @@ form {
   flex-direction: column;
   height: auto;
   align-items: left;
+  text-align:left;
+}
+.activity-item.activity-item-column .activity-item-label{
+  text-align: left;
+  align-self: left;
 }
 .activity-item.activity-item-column .activity-item-value{
   height: auto;
-  min-height: 300px;
+  min-height: 300rpx;
 }
 
 .activity-item.activity-item-btn {
@@ -85,8 +90,14 @@ form {
   background: rgb(66, 165, 245);
   color: #fff;
   box-sizing: border-box;
+  margin-bottom: 50rpx;
 }
 
 .activity-item .btn[disabled] {
   background: rgb(136, 190, 235);
+}
+.userAvatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 25px;
 }

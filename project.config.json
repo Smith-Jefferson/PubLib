@@ -29,13 +29,19 @@
 		},
 		"miniprogram": {
 			"current": 0,
-			"list": [
-				{
-					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
-				}
-			]
+			"list":[{
+				"id":-1,
+				"pathName": "pages/index/index",
+				"name": "书单"
+			  }, {
+				  "id":0,
+				"pathName": "pages/activityList/index",
+				"name": "活动"
+			  }, {
+				  "id":1,
+				"pathName": "pages/myLib/index",
+				"name": "我的"
+			  }]
 		}
 	}
 }

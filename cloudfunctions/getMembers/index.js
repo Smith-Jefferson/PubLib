@@ -16,9 +16,8 @@ exports.main = async (event, context) => {
         openId
     } = userInfo;
 
-    let membersInfo = [openId];
-    try {
-        
+    let membersInfo = [];
+    try {  
         await Promise.all(members.map(async (id) => {
             let gRes = await db.collection('users').where({
                 _openid: id

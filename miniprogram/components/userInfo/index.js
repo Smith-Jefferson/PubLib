@@ -50,7 +50,6 @@ Component({
         if (!res || !res.result) {
           return;
         }
-        console.log('userInfo',res.result)
         this.setData(res.result);
       })
     },

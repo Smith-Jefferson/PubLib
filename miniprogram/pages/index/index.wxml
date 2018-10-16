@@ -6,6 +6,13 @@
     <button bindtap="searchBooks" type="default" size="mini">有没有？</button>
   </view>
   <view>
+    <view wx:if="{{!bookList || bookList.length == 0}}" class="tips">
+      <text class="oneline" wx:if="{{loading}}">拉取书单中，请稍后……</text>
+      <text class="oneline" wx:if="{{!loading}}">只能看到自己已加入组织的人员分享的书单哦~</text>
+      <text class="oneline" wx:if="{{!loading}}">(赶紧加入组织找到同盟，</text>
+      <text class="oneline" wx:if="{{!loading}}">或者<text class="t-button" bindtap="addGroup">创建组织</text>并邀请同盟加入吧~)</text>
+    </view>
+
     <view wx:for="{{bookList}}" data-uid="{{item.openId}}" wx:key="index" class="item" bindtap="getMoreInfo">
       <view class="item-image">
         <image class="item-book-image" src="{{item.image}}"></image>
